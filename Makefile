@@ -15,11 +15,11 @@ endif
 	git tag $(version)
 	git push origin --tags
 	mkdir -p releases/$(version)
-	GOOS=linux GOARCH=amd64 go build -o releases/$(version)/differ-linux-amd64 .
-	GOOS=darwin GOARCH=amd64 go build -o releases/$(version)/differ-darwin-amd64 .
-	GOOS=windows GOARCH=amd64 go build -o releases/$(version)/differ-windows-amd64 .
+	GOOS=linux GOARCH=amd64 go build -o releases/$(version)/enable_pg_logs-linux-amd64 .
+	GOOS=darwin GOARCH=amd64 go build -o releases/$(version)/enable_pg_logs-darwin-amd64 .
+	GOOS=windows GOARCH=amd64 go build -o releases/$(version)/enable_pg_logs-windows-amd64 .
 	# these commands are not idempotent so ignore failures if an upload repeats
-	$(RELEASE) release --user kevinburke --repo differ --tag $(version) || true
-	$(RELEASE) upload --user kevinburke --repo differ --tag $(version) --name differ-linux-amd64 --file releases/$(version)/differ-linux-amd64 || true
-	$(RELEASE) upload --user kevinburke --repo differ --tag $(version) --name differ-darwin-amd64 --file releases/$(version)/differ-darwin-amd64 || true
-	$(RELEASE) upload --user kevinburke --repo differ --tag $(version) --name differ-windows-amd64 --file releases/$(version)/differ-windows-amd64 || true
+	$(RELEASE) release --user kevinburke --repo enable_pg_logs --tag $(version) || true
+	$(RELEASE) upload --user kevinburke --repo enable_pg_logs --tag $(version) --name enable_pg_logs-linux-amd64 --file releases/$(version)/enable_pg_logs-linux-amd64 || true
+	$(RELEASE) upload --user kevinburke --repo enable_pg_logs --tag $(version) --name enable_pg_logs-darwin-amd64 --file releases/$(version)/enable_pg_logs-darwin-amd64 || true
+	$(RELEASE) upload --user kevinburke --repo enable_pg_logs --tag $(version) --name enable_pg_logs-windows-amd64 --file releases/$(version)/enable_pg_logs-windows-amd64 || true
