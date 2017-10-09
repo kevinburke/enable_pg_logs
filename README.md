@@ -23,6 +23,15 @@ And you're done! (well you might need to restart Postgres, but mostly done)
 
 ### Install
 
+Find your target operating system (darwin, windows, linux) and desired bin
+directory, and modify the command below as appropriate:
+
+    curl --silent --location --output=/usr/local/bin/enable_pg_logs https://github.com/kevinburke/enable_pg_logs/releases/download/0.1/enable_pg_logs-linux-amd64 && chmod 755 /usr/local/bin/enable_pg_logs
+
+The latest version is 0.1.
+
+If you have a Go development environment, you can also install via source code:
+
 ```bash
 go get -u github.com/kevinburke/enable_pg_logs
 ```
