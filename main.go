@@ -85,23 +85,25 @@ func main() {
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
-	f.Close()
+	if err := f.Close(); err != nil {
+		log.Fatal(err)
+	}
 	if foundInclude {
 		fmt.Fprintf(os.Stderr, "found include stmt in %s, nothing to do!\n", pgConf)
-	} else {
-		fmt.Fprintf(os.Stderr, "adding include stmt to %s\n", pgConf)
-		f2, err2 := os.OpenFile(pgConf, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
-		if err2 != nil {
-			log.Fatal(err2)
-		}
-		if _, err3 := f2.WriteString(include + "\n"); err3 != nil {
-			log.Fatal(err3)
-		}
-		loggingFilename := filepath.Join(confDir, "logging.conf")
-		if err := ioutil.WriteFile(loggingFilename, loggingConf, 0600); err != nil {
-			log.Fatal(err)
-		}
-		fmt.Fprintf(os.Stderr, "Wrote %s\n", loggingFilename)
-		fmt.Fprintf(os.Stderr, "Done. Be sure to restart Postgres\n")
+		return
 	}
+	fmt.Fprintf(os.Stderr, "adding include stmt to %s\n", pgConf)
+	f2, err2 := os.OpenFile(pgConf, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+	if err2 != nil {
+		log.Fatal(err2)
+	}
+	if _, err3 := f2.WriteString(include + "\n"); err3 != nil {
+		log.Fatal(err3)
+	}
+	loggingFilename := filepath.Join(confDir, "logging.conf")
+	if err := ioutil.WriteFile(loggingFilename, loggingConf, 0600); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Fprintf(os.Stderr, "Wrote %s\n", loggingFilename)
+	fmt.Fprintf(os.Stderr, "Done. Be sure to restart Postgres\n")
 }
